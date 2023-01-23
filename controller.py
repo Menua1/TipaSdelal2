@@ -2,7 +2,7 @@ import model
 import view
 
 
-# Функция просмотра всех контактов 
+# Функция просмотра всех контактов
 def all_contacts(count: int = 0) -> list:
     reference, status = model.get_reference(count)
     if status:
@@ -13,6 +13,8 @@ def all_contacts(count: int = 0) -> list:
     return reference
 
 # Функция откртия файла
+
+
 def opening_file(file_name: str = "test.txt") -> list:
     reference, status = model.read_reference_from_file(file_name)
     if status:
@@ -25,6 +27,8 @@ def opening_file(file_name: str = "test.txt") -> list:
     return reference
 
 # Функция записи контакта в файл
+
+
 def directory_entry(file_name: str, reference: list) -> bool:
     status = model.write_reference_from_file(file_name, reference)
     if status:
@@ -36,20 +40,20 @@ def directory_entry(file_name: str, reference: list) -> bool:
     #         "Ошибка записи контакта на файл: {}".format(file_name))
 
 # Функция добавления нового контакта
+
+
 def add_contact(record: dict) -> (list):
     reference, status = model.add_reference(record)
     if status:
-        print("Успешно")
-    #   view.display_error(
-    #       "Добавить элемент не удалось: {}".format(reference))
-    # else:
-    #   view.display_message("Элемент успешно добавлен")
+        view.display_message("Элемент успешно добавлен")
+    else:
+        view.display_error(
+            "Добавить элемент не удалось: {}".format(reference))
     return reference, status
 
-
-
-
 # Функция удаления контакта
+
+
 def delete_contact(id: int) -> list:
     reference, status = model.delete_reference(id)
     if status:
@@ -59,7 +63,8 @@ def delete_contact(id: int) -> list:
     #   view.display_error("Ошибка удаления контакта с id {}: элемент не найден".format(id))
     return reference
 
-# Функция обновления контакта
+
+# Функция изменения контакта
 def update_contact(id: int, record: dict) -> list:
     reference, status = model.update_reference(id, record)
     if status:
@@ -70,6 +75,8 @@ def update_contact(id: int, record: dict) -> list:
     return reference
 
 # Функция нахождения в справочнике контакта с указанными параметрами
+
+
 def find_contact(parameters: dict = {}) -> list:
     reference, status = model.find_records(parameters)
     if status:
@@ -81,6 +88,8 @@ def find_contact(parameters: dict = {}) -> list:
     return reference
 
 # Функция нахождения в справочнике контакта по id
+
+
 def search_id(id: int) -> list:
     reference, status = model.find_record_from_id(id)
     if status:
@@ -92,6 +101,8 @@ def search_id(id: int) -> list:
     return reference
 
 # Функция создания случайных записей
+
+
 def random_entries(count: int = 10) -> list:
     imaginary_friends, status = model.generate_reference(count)
     if status:
@@ -104,13 +115,19 @@ def random_entries(count: int = 10) -> list:
 
 def input_handler(inp: int):
     if inp == 1:
-        view.show_all(all_contacts()) # просмотра всех контактов
+        view.show_all(all_contacts())  # просмотра всех контактов
     elif inp == 2:
         view.db_success(opening_file('test.txt'))  # открыть файл
     elif inp == 3:
         directory_entry('test.txt', model.reference)  # сохранить контакт
     elif inp == 4:
         add_contact(view.create_contact())  # добавить контакт
+    # elif inp == 5:
+
+    elif inp == 6:
+        view.show_all(all_contacts())
+        # удаление контакта
+        delete_contact(view.delite_num(len(model.reference)))
     elif inp == 0:
         view.exit_program()  # выход
 
